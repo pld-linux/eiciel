@@ -1,0 +1,6 @@
+--- eiciel-0.9.6.1/po/LINGUAS~	2008-04-12 19:17:23.000000000 +0200
++++ eiciel-0.9.6.1/po/LINGUAS	2008-06-19 20:22:39.662931488 +0200
+@@ -1,2 +1,2 @@
+ # Llenguatges disponibles
+-ca es de sv
++ca es de sv pl
