@@ -1,28 +1,27 @@
 Summary:	Graphical access control list (ACL) editor
 Summary(pl.UTF-8):	Graficzny edytor list kontroli dostępu (ACL)
 Name:		eiciel
-Version:	0.9.6.1
+Version:	0.9.8.1
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
-Source0:	http://rofi.pinchito.com/eiciel/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	9c6231747d0f0a9a932e2fb11c94fa2e
+Source0:	http://rofi.roger-ferrer.org/eiciel/download/%{name}-%{version}.tar.bz2
+# Source0-md5:	2c9c459f0604ce03ec49bb425cc42681
 Source1:	%{name}-pl.po
 Patch0:		%{name}-pl.po.patch
-URL:		http://rofi.pinchito.com/eiciel
+URL:		http://rofi.roger-ferrer.org/eiciel/
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext-devel
 BuildRequires:	glitz-devel
-BuildRequires:	gtkmm-devel
-BuildRequires:	libgnomeui-devel
+BuildRequires:	gtkmm3-devel
 BuildRequires:	libtool
-BuildRequires:	nautilus-devel
+BuildRequires:	nautilus-devel >= 3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define ext_dir %(eval "pkg-config --variable=extensiondir libnautilus-extension")
+%define		ext_dir	%(pkg-config --variable=extensiondir libnautilus-extension)
 
 %description
 Graphical editor for access control lists (ACL) and extended
@@ -37,7 +36,7 @@ samodzielne narzędzie.
 %prep
 %setup -q
 %patch0 -p1
-install %{SOURCE1} po/pl.po
+cp -p %{SOURCE1} po/pl.po
 
 %build
 %{__gettextize}
@@ -47,17 +46,18 @@ install %{SOURCE1} po/pl.po
 %{__autoheader}
 %{__automake}
 %configure \
-	--with-nautilus-extensions-dir=%{ext_dir} \
+	--disable-static
 
 %{__make}
 rm po/*.gmo
-%{__make} -C po/ update-gmo
+%{__make} -C po update-gmo
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{ext_dir}/*.la
 
 %find_lang %{name}
 
@@ -73,5 +73,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/*%{name}*
 %{_mandir}/man1/%{name}*
 %{ext_dir}/lib%{name}*
-%exclude %{ext_dir}/*.a
-%exclude %{ext_dir}/*.la
