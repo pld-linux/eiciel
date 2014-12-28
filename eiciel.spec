@@ -14,7 +14,7 @@ BuildRequires:	acl-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	desktop-file-utils
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glitz-devel
 BuildRequires:	gtkmm3-devel
 BuildRequires:	libtool
